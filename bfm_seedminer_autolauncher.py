@@ -16,7 +16,7 @@ import urllib.parse
 import struct
 
 logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemode='w')
-s = requests.Session() 
+s = requests.Session()
 baseurl = "https://bruteforcemovable.com"
 currentid = ""
 currentVersion = "CURRENT_AUTOLAUNCHER_VERSION"
@@ -115,13 +115,13 @@ def getmax(lfcs):
 	else:
 		print("Error: lfcs high u32 isn't 0 or 2")
 		exit(1)
-		
+
 	buflen=len(buf)
 	listlen=buflen//8
-	
+
 	for i in range(0,listlen):
 		lfcs_list.append(struct.unpack("<I",buf[i*8:i*8+4])[0])
-	
+
 	dist=lfcs-lfcs_list[listlen-1]
 	for i in range(1,listlen-1):
 		if lfcs < lfcs_list[i]:
@@ -133,13 +133,13 @@ def getmax(lfcs):
 			return max[c-1]
 		c+=1
 	return max[len(distance)-1]
-	
+
 print("Checking for new release on GitHub...")
 githubReleaseRequest = s.get('https://api.github.com/repos/deadphoenix8091/bfm_autolauncher/releases/latest')
 if githubReleaseRequest.status_code != 200:
 	print("ERROR: Unable to check GitHub for latest release.")
 	sys.exit(1)
-	
+
 githubReleaseJson = githubReleaseRequest.json()
 if githubReleaseJson['tag_name'] != currentVersion :
     print("Updating...")
@@ -148,7 +148,7 @@ if githubReleaseJson['tag_name'] != currentVersion :
     sys.exit(0)
 else:
 	print("Already up-to-date.")
-	
+
 if os.path.isfile("bfm_autolauncher_exception.log"):
     try:
         os.remove("bfm_autolauncher_exception.log")
@@ -192,7 +192,7 @@ else:
     miner_name = input("No username set, which name would you like to have on the leaderboards? \n (Allowed Characters a-Z 0-9 - _ | ): ")
     with open("minername", "wb") as file:
         pickle.dump(miner_name, file)
-		
+
 miner_name = re.sub('[^a-zA-Z0-9\_\-\|]+' ,'', miner_name)
 print("Welcome " + miner_name + ", really appreciate your mining effort!")
 
@@ -241,7 +241,7 @@ else:
 while True:
     try:
         try:
-            r = s.get(baseurl + "/getWork?minername=" + urllib.parse.quote_plus(miner_name))
+            r = s.get(baseurl + "/getWork?minername=" + urllib.parse.quote_plus(miner_name) + "&ver=" + urllib.parse.quote_plus(currentVersion))
         except:
             print("Error. Waiting 30 seconds...")
             time.sleep(30)
