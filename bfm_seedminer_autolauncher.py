@@ -13,6 +13,7 @@ import time
 import traceback
 import re
 import urllib.parse
+import struct
 
 logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemode='w')
 s = requests.Session() 
@@ -94,6 +95,45 @@ def download_file(url, local_filename):
                 # f1.flush() commented by recommendation from J.F.Sebastian
     return local_filename
 
+def getmax(lfcs):
+	lfcs_list=[]
+	isnew=lfcs>>32
+	lfcs&=0xFFFFFFFF
+	c=0
+	if isnew==2:
+		print("new3ds detected")
+		max     =[14,   14,   18,   23,   27,   35,   37,   44,    55,   400]
+		distance=[ 0,0x100,0x200,0x300,0x600,0xA00,0xC00,0xF00,0x1A00,0x5300]
+		with open("saves/new-v2.dat", "rb") as f:
+			buf = f.read()
+	elif isnew==0:
+		print("old3ds detected")
+		max     =[17,   17,   22,   23,   29,   31,   40,    43,    54,    71,   400]
+		distance=[ 0,0x100,0x200,0x300,0x400,0x700,0x800,0x1500,0x1E00,0x5000,0x5300]
+		with open("saves/old-v2.dat", "rb") as f:
+			buf = f.read()
+	else:
+		print("Error: lfcs high u32 isn't 0 or 2")
+		exit(1)
+		
+	buflen=len(buf)
+	listlen=buflen//8
+	
+	for i in range(0,listlen):
+		lfcs_list.append(struct.unpack("<I",buf[i*8:i*8+4])[0])
+	
+	dist=lfcs-lfcs_list[listlen-1]
+	for i in range(1,listlen-1):
+		if lfcs < lfcs_list[i]:
+			dist=min(lfcs-lfcs_list[i-1],lfcs_list[i+1]-lfcs)
+			break
+	print("Distance: %08X" % dist)
+	for i in distance:
+		if dist<i:
+			return max[c-1]
+		c+=1
+	return max[len(distance)-1]
+	
 print("Checking for new release on GitHub...")
 githubReleaseRequest = s.get('https://api.github.com/repos/deadphoenix8091/bfm_autolauncher/releases/latest')
 if githubReleaseRequest.status_code != 200:
@@ -220,8 +260,11 @@ while True:
                 download_file(baseurl + '/getPart1?task=' +
                               currentid, 'movable_part1.sed')
                 print("Bruteforcing " + str(datetime.datetime.now()))
+                movableFile = open('movable_part1.sed', 'rb')
+                lfcs = int.from_bytes(movableFile.read(8), byteorder="little")
+                print("Set MaxOffset to: %d" % lfcs)
                 process = subprocess.Popen(
-                    [sys.executable, "seedminer_launcher3.py", "gpu", "0", "80"])
+                    [sys.executable, "seedminer_launcher3.py", "gpu", "0", str(lfcs)])
                 timer = 0
                 while process.poll() is None:
                     # we need to poll for kill more often then we check server because we would waste up to 30 secs after finish
