@@ -262,9 +262,10 @@ while True:
                 print("Bruteforcing " + str(datetime.datetime.now()))
                 movableFile = open('movable_part1.sed', 'rb')
                 lfcs = int.from_bytes(movableFile.read(8), byteorder="little")
-                print("Set MaxOffset to: %d" % lfcs)
+                maxOffset = getmax(lfcs)
+                print("Set MaxOffset to: %d" % maxOffset)
                 process = subprocess.Popen(
-                    [sys.executable, "seedminer_launcher3.py", "gpu", "0", str(lfcs)])
+                    [sys.executable, "seedminer_launcher3.py", "gpu", "0", str(maxOffset)])
                 timer = 0
                 while process.poll() is None:
                     # we need to poll for kill more often then we check server because we would waste up to 30 secs after finish
