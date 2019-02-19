@@ -18,7 +18,11 @@ logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemo
 s = requests.Session() 
 baseurl = "https://bruteforcemovable.com"
 currentid = ""
+<<<<<<< HEAD
 currentVersion = "2.7.3"
+=======
+currentVersion = "CURRENT_AUTOLAUNCHER_VERSION"
+>>>>>>> bb1ce9c1c2bda78d3c5193212099ef74e215ed2e
 ctrc_kills_al_script = True
 active_job = False
 os_name = os.name
