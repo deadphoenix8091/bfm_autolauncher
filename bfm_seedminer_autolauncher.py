@@ -15,7 +15,6 @@ import re
 import urllib.parse
 
 logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemode='w')
-
 s = requests.Session() 
 baseurl = "https://bruteforcemovable.com"
 currentid = ""
