@@ -13,7 +13,6 @@ import time
 import traceback
 import re
 import urllib.parse
-import json
 
 logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemode='w')
 s = requests.Session() 
