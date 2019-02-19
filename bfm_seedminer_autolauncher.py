@@ -288,7 +288,7 @@ while True:
                     print("Please try figuring this out before running this script again")
                     input("Press the Enter key to exit")
                     sys.exit(1)
-    except Exception as e:
+    except Exception:
         active_job = False
         if currentid != "":
             s.get(baseurl + "/killWork?task=" + currentid + "&kill=n")
