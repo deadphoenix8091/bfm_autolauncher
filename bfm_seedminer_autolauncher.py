@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.DEBUG, filename='bfm_autolauncher.log', filemo
 s = requests.Session() 
 baseurl = "https://bruteforcemovable.com"
 currentid = ""
-currentVersion = "CURRENT_AUTOLAUNCHER_VERSION"
+currentVersion = "2.6.5"
 ctrc_kills_al_script = True
 active_job = False
 os_name = os.name
@@ -94,21 +94,16 @@ def download_file(url, local_filename):
                 # f1.flush() commented by recommendation from J.F.Sebastian
     return local_filename
 
-print("Checking for new release on GitHub...")
-githubReleaseRequest = s.get('https://api.github.com/repos/deadphoenix8091/bfm_autolauncher/releases/latest')
-if githubReleaseRequest.status_code != 200:
-	print("ERROR: Unable to check GitHub for latest release.")
-	sys.exit(1)
-	
-githubReleaseJson = githubReleaseRequest.json()
-if githubReleaseJson['tag_name'] != currentVersion :
+
+print("Checking for updates...")
+r0 = s.get(baseurl + "/static/autolauncher_version")
+if r0.text != currentVersion:
     print("Updating...")
-    download_file(githubReleaseJson['assets'][0]['browser_download_url'], 'bfm_seedminer_autolauncher.py')
+    download_file(baseurl + "/static/bfm_seedminer_autolauncher.py",
+                  "bfm_seedminer_autolauncher.py")
     subprocess.call([sys.executable, "bfm_seedminer_autolauncher.py"])
     sys.exit(0)
-else:
-	print("Already up-to-date.")
-	
+
 if os.path.isfile("bfm_autolauncher_exception.log"):
     try:
         os.remove("bfm_autolauncher_exception.log")
