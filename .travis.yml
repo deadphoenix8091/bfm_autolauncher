@@ -3,6 +3,15 @@ python: 3.6
 os: linux
 sudo: false
 install:
-  - pip install pyflakes
+- pip install pyflakes
 script:
-  - pyflakes bfm_seedminer_autolauncher.py
+- pyflakes bfm_seedminer_autolauncher.py
+before_deploy:
+- sed -i 's/CURRENT_AUTOLAUNCHER_VERSION/${TRAVIS_TAG}/g' bfm_seedminer_autolauncher.py 
+deploy:
+  provider: releases
+  api_key:
+    secure: 2L9Ep98n1yci+/Y7Ko8PdOT9y8ZwszY+2wUeeTeDgHC1tfE55S5uUrJuAI5vVHkAx6OGyQNyB8yyYiZBdocdkEjaLfm9L+LJqtGA3c+fFgHtOdb1J9fBhizP4kMXWONjaK85JSW84Yd+0qBzwvdMLmv5V6DSbwF0TElRHZt5cj+m0fcYV7z0vHdokmiMEC9cO0DzI/EHHO0R8A6wgHjQsJaZbyhWD5BhoRaRCUkPqE4mUvaLIYLZicntf92Av17uUDsLal2Q7KVE331M8PYMvUXlxlaBAy7WyJxayeNDLtWwlTD1D8HCACKLyeVwNSbSuHE9A+5dyAwx1QRbv53n/pBBBNKQuSq4ikjmTXNABbDKzzTdmqUh2SZ1Cs8ezuXdyHxEd842VVh41hZet/AkPFL0a2HL6sfxQjPqB4tEeMRM9U2/ZgWb8SEw/jnijuKD+uFQ1o8qrEdgJ7NOQgV8SVRHS/vqdj8G9O2K2MB5h4BKO1T6JALQvBLGzkVpazQ7lZLOVUc5wVjqBic/66il9vrYiodAtbFbS4KJGeBkRuXm9nCQckl2dU7NKU4lRhxZ5kAE2YSqz4hw6RupIVLUQEhXvZmIn7YAvc9o9X2+m6GkBiz4J7qK88iUZ3WDWHpa16VWdGEmciU00l99BGe2MahnEZX9Z+RV9xVCFkEMXGE=
+  file: bfm_seedminer_autolauncher.py
+  on:
+    repo: deadphoenix8091/bfm_autolauncher
