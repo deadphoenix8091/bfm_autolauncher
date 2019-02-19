@@ -7,7 +7,7 @@ install:
 script:
 - pyflakes bfm_seedminer_autolauncher.py
 before_deploy:
-- sed -i 's/CURRENT_AUTOLAUNCHER_VERSION/'${git describe --tags}'/g' bfm_seedminer_autolauncher.py
+- sed -i 's/CURRENT_AUTOLAUNCHER_VERSION/'$TRAVIS_TAG'/g' bfm_seedminer_autolauncher.py
 deploy:
   provider: releases
   skip_cleanup: true
@@ -17,3 +17,4 @@ deploy:
   on:
     repo: deadphoenix8091/bfm_autolauncher
     all_branches: true
+    tags: true
