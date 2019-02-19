@@ -10,6 +10,7 @@ before_deploy:
 - sed -i 's/CURRENT_AUTOLAUNCHER_VERSION/'$TRAVIS_TAG'/g' bfm_seedminer_autolauncher.py
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: Auv/lWeUoM5Jc26y0TrgkSjz3mi6r6MnVWStRtxFrZCfGHk3YJBSeINzPlwOXko5jBJeR0yrkRDOP6rLFZov4K4kWPEeoABu/o4c5LO3Y1V/QN/Aqha5h3V/lDlbCXt5ig9PZOAa2d78+1Xh3mpRnXE2eM9n0yrjc2ePxRlPDxpvSs8w8M9j4WsDV7HbVFYIFtF4KCjMnraJJnin4XgUEPN+esjzhHEAcFeYmY+LgYX/44j3FxTuyac32FBa/sTicy835Fbw1GId+ZLPki9+95Dgi9txKSU74R1gZM+SrajsxPpdI6RVYmjFBvnyGzVUcGfaMt//VhWc3IcRGR2V0uuaOg6W8h3bfyjWAjs6JkI7r4FOS18Pss9e8ZAgKPpe3+yUCbE4JHVX04f1ucoaja8xvt0M0fNGEu33m10JLYSxcqk2+CdV2t+9VAJBo/PEZdQ10sHBs1YboJ9LGuyhqtMmV4sPE/mBy/0Xbw9PN4DHrRQi+0j35iw+ili4YNvYgMowcFVgE2wy4D2zQpoZApWGtwpda4zsV72c0jAE1/HdaKkGyPFBWzvjJBVOYrziizla9HlsumVRbl6h3tsew88FgYbnzF8o5QRerAYjorLqZZ5x4+35B+QuAsFzqiquahk21P76qCk0c2m4fJhfW2mX59oqDxOnJdwPx3SGGGE=
   file: bfm_seedminer_autolauncher.py
