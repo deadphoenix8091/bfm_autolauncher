@@ -98,12 +98,13 @@ def download_file(url, local_filename):
 def getmax(lfcs):
 	lfcs_list=[]
 	isnew=lfcs>>32
-	lfcs&=0xFFFFFFFF
+	lfcs&=0xFFFFFF00
+	lfcs|=0x80
 	c=0
 	if isnew==2:
 		print("new3ds detected")
-		max     =[14,   14,   18,   23,   27,   35,   37,   44,    55,   400]
-		distance=[ 0,0x100,0x200,0x300,0x600,0xA00,0xC00,0xF00,0x1A00,0x5300]
+		max     =[14,   14,   18,   23,   24,   27,   35,   37,   44,    55,   400]
+		distance=[ 0,0x100,0x200,0x300,0x500,0x600,0xA00,0xC00,0xF00,0x1A00,0x5200]
 		with open("saves/new-v2.dat", "rb") as f:
 			buf = f.read()
 	elif isnew==0:
@@ -115,13 +116,13 @@ def getmax(lfcs):
 	else:
 		print("Error: lfcs high u32 isn't 0 or 2")
 		exit(1)
-
+		
 	buflen=len(buf)
 	listlen=buflen//8
-
+	
 	for i in range(0,listlen):
 		lfcs_list.append(struct.unpack("<I",buf[i*8:i*8+4])[0])
-
+	
 	dist=lfcs-lfcs_list[listlen-1]
 	for i in range(1,listlen-1):
 		if lfcs < lfcs_list[i]:
