@@ -27,7 +27,7 @@ skipUploadBecauseJobBroke = False
 
 
 def signal_handler(sig, frame):
-    # If bfCL was running, we've already killed it by pressing Ctr + C
+    # If bfCL was running, we've already killed it by Pressing Ctr + C
     global active_job
     global currentid
     global skipUploadBecauseJobBroke
@@ -281,7 +281,7 @@ while True:
                             active_job = False
                             print("\nJob cancelled or expired, killing...")
                             process_killer()
-                            print("press ctrl-c if you would like to quit")
+                            print("Press ctrl-c if you would like to quit")
                             time.sleep(5)
                             break
                 if process.returncode == 101 and skipUploadBecauseJobBroke is False:
@@ -290,7 +290,7 @@ while True:
                     s.get(baseurl + "/killWork?task=" + currentid + "&kill=y")
                     currentid = ""
                     print("\nJob reached the specified max offset and was killed...")
-                    print("press ctrl-c if you would like to quit")
+                    print("Press ctrl-c if you would like to quit")
                     time.sleep(5)
                 elif os.path.isfile("movable.sed") and skipUploadBecauseJobBroke is False:
                     active_job = False
@@ -314,7 +314,7 @@ while True:
                             print("Total seeds mined: {}".format(total_mined))
                             with open("total_mined", "wb") as file:
                                 pickle.dump(total_mined, file)
-                            print("press ctrl-c if you would like to quit")
+                            print("Press ctrl-c if you would like to quit")
                             time.sleep(5)
                             break
                         else:
@@ -326,7 +326,7 @@ while True:
                                 sys.exit(1)
                             print("Upload failed! The script will try to upload completed files {} more time(s) before exiting".format(3 - failed_upload_attempts))
                             print("Waiting 10 seconds...")
-                            print("press ctrl-c if you would like to quit")
+                            print("Press ctrl-c if you would like to quit")
                             time.sleep(10)
                 elif os.path.isfile("movable.sed") is False and skipUploadBecauseJobBroke is False:
                     s.get(baseurl + "/killWork?task=" + currentid + "&kill=n")
@@ -349,5 +349,5 @@ while True:
         logging.exception(datetime.datetime.now())
         print("done")
         print("Waiting 10 seconds...")
-        print("press ctrl-c if you would like to quit")
+        print("Press ctrl-c if you would like to quit")
         time.sleep(10)
