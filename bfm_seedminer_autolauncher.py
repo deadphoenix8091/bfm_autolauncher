@@ -27,7 +27,7 @@ skipUploadBecauseJobBroke = False
 
 
 def signal_handler(sig, frame):
-    # If bfCL was running, we've already killed it by Pressing Ctr + C
+    # If bfCL was running, we've already killed it by pressing Ctr + C
     global active_job
     global currentid
     global skipUploadBecauseJobBroke
