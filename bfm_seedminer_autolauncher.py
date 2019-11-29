@@ -103,14 +103,14 @@ def getmax(lfcs):
 	c=0
 	if isnew==2:
 		print("new3ds detected")
-		max     =[14,   14,   18,   23,   24,   27,   35,   37,   44,    55,   400]
-		distance=[ 0,0x100,0x200,0x300,0x500,0x600,0xA00,0xC00,0xF00,0x1A00,0x5200]
+		max     =[      0,     16,     20,     21,     22,     23,     26,     27,     29,     30,     31,     34,     35,    400]
+		distance=[0x00000,0x00100,0x00200,0x00400,0x00500,0x00600,0x00700,0x00900,0x00A00,0x00B00,0x01000,0x01200,0x02400,0x03F00]
 		with open("saves/new-v2.dat", "rb") as f:
 			buf = f.read()
 	elif isnew==0:
 		print("old3ds detected")
-		max     =[17,   17,   22,   23,   29,   31,   40,    43,    54,    71,   400]
-		distance=[ 0,0x100,0x200,0x300,0x400,0x700,0x800,0x1500,0x1E00,0x5000,0x5300]
+		max     =[      0,     18,     21,     27,     29,     30,     39,     45,     56,    400]
+		distance=[0x00000,0x00100,0x00200,0x00400,0x00600,0x00C00,0x00E00,0x02100,0x06100,0x06200]
 		with open("saves/old-v2.dat", "rb") as f:
 			buf = f.read()
 	else:
@@ -133,7 +133,7 @@ def getmax(lfcs):
 		if dist<i:
 			return max[c-1]
 		c+=1
-	return max[len(distance)-1]
+	return max[len(distance)-1] + 10
 
 print("Checking for new release on GitHub...")
 githubReleaseRequest = s.get('https://api.github.com/repos/deadphoenix8091/bfm_autolauncher/releases/latest')
