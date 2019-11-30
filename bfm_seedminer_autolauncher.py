@@ -131,7 +131,7 @@ def getmax(lfcs):
 	print("Distance: %08X" % dist)
 	for i in distance:
 		if dist<i:
-			return max[c-1]
+			return max[c-1] + 10
 		c+=1
 	return max[len(distance)-1] + 10
 
