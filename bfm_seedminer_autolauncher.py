@@ -98,8 +98,8 @@ def download_file(url, local_filename):
 def getmax(lfcs):
 	lfcs_list=[]
 	isnew=lfcs>>32
-	lfcs&=0xFFFFFF00
-	lfcs|=0x80
+	lfcs&=0xFFFFFFF0
+	lfcs|=0x8
 	c=0
 	if isnew==2:
 		print("new3ds detected")
