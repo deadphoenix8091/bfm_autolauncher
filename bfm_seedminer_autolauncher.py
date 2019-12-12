@@ -103,13 +103,13 @@ def getmax(lfcs):
 	c=0
 	if isnew==2:
 		print("new3ds detected")
-		max     =[      0,     16,     20,     21,     22,     23,     26,     27,     29,     30,     31,     34,     35,    400]
+		max     =[     16,     16,     20,     21,     22,     23,     26,     27,     29,     30,     31,     34,     35,    400]
 		distance=[0x00000,0x00100,0x00200,0x00400,0x00500,0x00600,0x00700,0x00900,0x00A00,0x00B00,0x01000,0x01200,0x02400,0x03F00]
 		with open("saves/new-v2.dat", "rb") as f:
 			buf = f.read()
 	elif isnew==0:
 		print("old3ds detected")
-		max     =[      0,     18,     21,     27,     29,     30,     39,     45,     56,    400]
+		max     =[     18,     18,     21,     27,     29,     30,     39,     45,     56,    400]
 		distance=[0x00000,0x00100,0x00200,0x00400,0x00600,0x00C00,0x00E00,0x02100,0x06100,0x06200]
 		with open("saves/old-v2.dat", "rb") as f:
 			buf = f.read()
